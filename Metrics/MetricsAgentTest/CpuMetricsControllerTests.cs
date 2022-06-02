@@ -1,14 +1,14 @@
 using System;
 using Xunit;
 
-namespace MetricsAgentTests
+namespace MetricsAgentTest
 {
-    public class UnitTest1
+    public class CpuMetricsControllerTests
     {
         [Fact]
-        public void Test1()
+        public void GetCpuMetricsTests()
         {
-            // TODO: Домашнее задание [Пункт 3]
+            // TODO: Домашнее задание [Урок 2, пункт 3]
             //  Добавьте проект с тестами для агента сбора метрик. Напишите простые Unit-тесты на каждый
             // метод отдельно взятого контроллера в обоих тестовых проектах.
 

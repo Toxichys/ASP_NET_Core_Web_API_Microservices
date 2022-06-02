@@ -9,7 +9,6 @@ namespace MetricsManager.Controllers
     public class CpuMetricsController : ControllerBase
     {
         [HttpGet("agent/{agentId}/from/{fromTime}/to/{toTime}")]
-        //[HttpGet("agent")]
         public IActionResult GetMetricsFromAgent(
             [FromRoute] int agentId, [FromRoute] TimeSpan fromTime, [FromRoute] TimeSpan toTime)
         {
@@ -22,6 +21,5 @@ namespace MetricsManager.Controllers
         {
             return Ok();
         }
-
     }
 }

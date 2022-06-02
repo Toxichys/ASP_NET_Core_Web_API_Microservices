@@ -1,3 +1,4 @@
+using MetricsManager.Controllers;
 using MetricsManager.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,12 +30,14 @@ namespace MetricsManager
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddSingleton<AgentPool>();
+            services.AddSingleton<IAgentPool<AgentInfo>, AgentPool>();
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MetricsManager", Version = "v1" });
+
                 // Поддержка TimeSpan
                 c.MapType<TimeSpan>(() => new OpenApiSchema
                 {

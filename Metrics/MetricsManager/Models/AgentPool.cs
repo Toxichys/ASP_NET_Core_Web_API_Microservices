@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using MetricsManager.Controllers;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MetricsManager.Models
 {
-    public class AgentPool
+    public class AgentPool : IAgentPool<AgentInfo>
     {
         private Dictionary<int, AgentInfo> _values;
 
@@ -20,6 +21,7 @@ namespace MetricsManager.Models
 
         public AgentInfo[] Get()
         {
+
             return _values.Values.ToArray();
         }
 
@@ -28,6 +30,5 @@ namespace MetricsManager.Models
             get { return _values; }
             set { _values = value; }
         }
-
     }
 }
