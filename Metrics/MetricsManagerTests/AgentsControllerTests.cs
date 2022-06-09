@@ -16,7 +16,7 @@ namespace MetricsManagerTests
         public AgentsControllerTests()
         {
             _agentPool = LazyAgentPool.Instance;
-            _agentsController = new AgentsController(_agentPool);
+            _agentsController = new AgentsController(null, _agentPool);
         }
 
 

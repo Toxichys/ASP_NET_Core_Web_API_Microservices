@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 
 namespace MetricsManager.Controllers
 {
@@ -11,10 +12,12 @@ namespace MetricsManager.Controllers
     {
 
         private IAgentPool<AgentInfo> _agentPool;
+        private ILogger<AgentsController> _logger;
 
-        public AgentsController(IAgentPool<AgentInfo> agentPool)
+        public AgentsController(ILogger<AgentsController> logger, IAgentPool<AgentInfo> agentPool)
         {
             _agentPool = agentPool;
+            _logger = logger;
         }
 
         [HttpPost("register")]
@@ -23,6 +26,8 @@ namespace MetricsManager.Controllers
             if (agentInfo != null)
             {
                 _agentPool.Add(agentInfo);
+                if (_logger != null)
+                    _logger.LogDebug("Успешно добавление агента {0}", agentInfo);
             }
             return Ok();
         }
@@ -31,14 +36,22 @@ namespace MetricsManager.Controllers
         public IActionResult EnableAgentById([FromRoute] int agentId)
         {
             if (_agentPool.Values.ContainsKey(agentId))
+            {
                 _agentPool.Values[agentId].Enable = true;
+                if (_logger != null)
+                    _logger.LogDebug("Успешно включение агента {0}", agentId);
+            }
             return Ok();
         }
         [HttpPut("disable/{agentId}")]
         public IActionResult DisableAgentById([FromRoute] int agentId)
         {
             if (_agentPool.Values.ContainsKey(agentId))
+            {
                 _agentPool.Values[agentId].Enable = false;
+                if (_logger != null)
+                    _logger.LogDebug("Успешно выключение агента {0}", agentId);
+            }
             return Ok();
         }
 
@@ -49,7 +62,10 @@ namespace MetricsManager.Controllers
         [HttpGet("get")]
         public IActionResult GetAllAgents()
         {
-            return Ok(_agentPool.Get());
+            var arragentPool = _agentPool.Get();
+            if (_logger != null)
+                _logger.LogDebug("Успешно получение всех агентов");
+            return Ok(arragentPool);
         }
 
     }
